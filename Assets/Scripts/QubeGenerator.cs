@@ -6,6 +6,7 @@ public class QubeGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject qubePrefab;
     [SerializeField] private int layers = 3;
+    [SerializeField] private float qubePadding = 0.5f;
 
     private void Start()
     {
@@ -14,7 +15,7 @@ public class QubeGenerator : MonoBehaviour
 
     private IEnumerator GenerateQube(int size)
     {
-        float qubeSize = qubePrefab.GetComponent<BoxCollider>().size.x;
+        float qubeSize = qubePrefab.GetComponent<BoxCollider>().size.x + qubePadding;
 
         for (int i = 0; i < size; i++)
         {
@@ -22,7 +23,7 @@ public class QubeGenerator : MonoBehaviour
             {
                 for (int k = 0; k < size; k++)
                 {
-                    Vector3 pos = new Vector3(k * qubeSize, j * qubeSize, i * qubeSize);
+                    Vector3 pos = new Vector3(qubePadding + k * qubeSize, qubePadding + j * qubeSize, qubePadding + i * qubeSize);
                     var go = Instantiate(qubePrefab, pos, Quaternion.identity, transform);
                     yield return new WaitForEndOfFrame();
                 }
